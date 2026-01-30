@@ -39,7 +39,7 @@ public class AdminController {
 	@Autowired
 	public AdminService adminService;
 
-	// ´ë½Ãº¸µå
+	// ëŒ€ì‹œë³´ë“œ
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public String index(Model model,
 			@RequestParam(required = false) String startDate, 
@@ -67,7 +67,7 @@ public class AdminController {
 	
 	
 
-	// È¸¿ø °ü¸®
+	// íšŒì› ê´€ë¦¬
 	@RequestMapping(value = "/membership.do", method = RequestMethod.GET)
 	public String membership(Model model,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -80,17 +80,17 @@ public class AdminController {
 		pagingParam.put("start", paging.getStart());
 		pagingParam.put("perPage", paging.getPerPage());
 
-		// ºñÁö´Ï½º ·ÎÁ÷ : DB¿¡ ÀÖ´Â ÀüÃ¼ È¸¿ø ¸ñ·Ï µ¥ÀÌÅÍ°¡Á®¿À±â
+		// ë¹„ì§€ë‹ˆìŠ¤ ë¡œì§ : DBì— ìˆëŠ” ì „ì²´ íšŒì› ëª©ë¡ ë°ì´í„°ê°€ì ¸ì˜¤ê¸°
 		List<UserVO> list = adminService.userList(pagingParam);
 
-		// ¸ğµ¨ °´Ã¼ »ç¿ëÇÏ¿© Á¶È¸ µ¥ÀÌÅÍ È­¸éÀ¸·Î Æ÷¿öµù
+		// ëª¨ë¸ ê°ì²´ ì‚¬ìš©í•˜ì—¬ ì¡°íšŒ ë°ì´í„° í™”ë©´ìœ¼ë¡œ í¬ì›Œë”©
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 
 		return "admin/membership";
 	}
 	
-	//È¸¿ø Á¤º¸ ÀúÀå (AJAX ¿äÃ» Ã³¸®)
+	//íšŒì› ì •ë³´ ì €ì¥ (AJAX ìš”ì²­ ì²˜ë¦¬)
 	@ResponseBody
     @RequestMapping(value = "/updateUser.do", method = RequestMethod.POST)
     public Map<String, Object> saveUserReply(@RequestBody UserVO userVO) {
@@ -101,28 +101,28 @@ public class AdminController {
 
             if (result > 0) {
                 response.put("status", "success");
-                response.put("message", "ÀúÀåµÇ¾ú½À´Ï´Ù.");
+                response.put("message", "ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.");
             } else {
                 response.put("status", "fail");
-                response.put("message", "ÀúÀå¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+                response.put("message", "ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
             }
         } catch (Exception e) {
             e.printStackTrace();
             response.put("status", "error");
-            response.put("message", "¼­¹ö ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+            response.put("message", "ì„œë²„ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
         }
 
         return response;
     }
 	
-	// È¸¿ø °ü¸® °Ë»ö (AJAX)
+	// íšŒì› ê´€ë¦¬ ê²€ìƒ‰ (AJAX)
 	@PostMapping("/search.do")
 	public ResponseEntity<List<UserVO>> searchMembers(@RequestBody Map<String, Object> searchParams) {
 		 List<UserVO> members = adminService.searchMembers(searchParams);
 		    return ResponseEntity.ok(members);
     }
 	
-	// »óÇ° °ü¸®
+	// ìƒí’ˆ ê´€ë¦¬
 	@RequestMapping(value = "/product.do", method = RequestMethod.GET)
 	public String product(Model model,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -135,17 +135,17 @@ public class AdminController {
 		pagingParam.put("start", paging.getStart());
 		pagingParam.put("perPage", paging.getPerPage());
 
-		// ºñÁö´Ï½º ·ÎÁ÷ : DB¿¡ ÀÖ´Â ÀüÃ¼ È¸¿ø ¸ñ·Ï µ¥ÀÌÅÍ°¡Á®¿À±â
+		// ë¹„ì§€ë‹ˆìŠ¤ ë¡œì§ : DBì— ìˆëŠ” ì „ì²´ íšŒì› ëª©ë¡ ë°ì´í„°ê°€ì ¸ì˜¤ê¸°
 		List<ProductVO> list = adminService.productList(pagingParam);
 
-		// ¸ğµ¨ °´Ã¼ »ç¿ëÇÏ¿© Á¶È¸ µ¥ÀÌÅÍ È­¸éÀ¸·Î Æ÷¿öµù
+		// ëª¨ë¸ ê°ì²´ ì‚¬ìš©í•˜ì—¬ ì¡°íšŒ ë°ì´í„° í™”ë©´ìœ¼ë¡œ í¬ì›Œë”©
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
 
 		return "admin/product";
 	}
 
-	// »óÇ° µî·Ï
+	// ìƒí’ˆ ë“±ë¡
 	@RequestMapping(value = "/productWrite.do", method = RequestMethod.GET)
 	public String productWrite() {
 
@@ -194,8 +194,8 @@ public class AdminController {
 
 			topNewFileName = fileRealPath;
 
-			productVO.setAttachment_detail_name(topFile.getOriginalFilename()); // ´ëÇ¥ÀÌ¹ÌÁö ¾÷·ÎµåÀÌ¸§
-			productVO.setAttachment_detail_new_name(topNewFileName); // ´ëÇ¥ÀÌ¹ÌÁö ½ÇÁ¦ ¾÷·Îµå ÀÌ¸§
+			productVO.setAttachment_detail_name(topFile.getOriginalFilename()); // ëŒ€í‘œì´ë¯¸ì§€ ì—…ë¡œë“œì´ë¦„
+			productVO.setAttachment_detail_new_name(topNewFileName); // ëŒ€í‘œì´ë¯¸ì§€ ì‹¤ì œ ì—…ë¡œë“œ ì´ë¦„
 			productVO.setAttachment_type("PT");
 			productVO.setAttachment_detail_create_id(user_id);
 			adminService.insertAttachment(productVO);
@@ -218,8 +218,8 @@ public class AdminController {
 
 				newFileName = fileRealName;
 
-				productVO.setAttachment_detail_name(file.getOriginalFilename()); // »óÇ° »ó¼¼ ÀÌ¹ÌÁö ¾÷·Îµå ÀÌ¸§
-				productVO.setAttachment_detail_new_name(newFileName); // »óÇ° »ó¼¼ ÀÌ¹ÌÁö ½ÇÁ¦ ¾÷·Îµå ÀÌ¸§
+				productVO.setAttachment_detail_name(file.getOriginalFilename()); // ìƒí’ˆ ìƒì„¸ ì´ë¯¸ì§€ ì—…ë¡œë“œ ì´ë¦„
+				productVO.setAttachment_detail_new_name(newFileName); // ìƒí’ˆ ìƒì„¸ ì´ë¯¸ì§€ ì‹¤ì œ ì—…ë¡œë“œ ì´ë¦„
 				productVO.setAttachment_detail_create_id(user_id);
 				
 				adminService.insertAttachmentDetail(productVO);
@@ -228,16 +228,16 @@ public class AdminController {
 		}
 
 		if(resultInt>0) {
-			System.out.println("µî·Ï¿Ï·á");
+			System.out.println("ë“±ë¡ ì™„ë£Œ");
 			return "redirect:product.do";
 		}else {
-			System.out.println("µî·Ï ½ÇÆĞ ");
+			System.out.println("ë“±ë¡ ì‹¤íŒ¨");
 			return "redirect:productWrite.do";
 		}
 
 	}
 
-	// »óÇ° µî·Ï ¼öÁ¤
+	// ìƒí’ˆ ë“±ë¡ ìˆ˜ì •
 	@RequestMapping(value = "/productModify.do", method = RequestMethod.GET)
 	public String productModify(Model model, @RequestParam(value = "product_no") int product_no) {
 
@@ -259,7 +259,7 @@ public class AdminController {
 	    String user_id = principal.getName();
 	    productVO.setProduct_update_id(user_id);
 
-	    // ÆÄÀÏ ¾÷·Îµå °æ·Î ¼³Á¤
+	    // íŒŒì¼ ì—…ë¡œë“œ ê²½ë¡œ ì„¤ì •
 	    String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 	    System.out.println("upload path -> " + path);
 	    
@@ -269,14 +269,14 @@ public class AdminController {
 	        dir.mkdirs();
 	    }
 
-	    // ´ëÇ¥ ÀÌ¹ÌÁö Ã³¸®
+	    // ëŒ€í‘œ ì´ë¯¸ì§€ ì²˜ë¦¬
 	    if (!topFile.getOriginalFilename().isEmpty()) {
-	    	// ±âÁ¸ ´ëÇ¥ ÀÌ¹ÌÁö »èÁ¦
+	    	// ê¸°ì¡´ ëŒ€í‘œ ì´ë¯¸ì§€ ì‚­ì œ
 	        if (productVO.getAttachment_no() != null && "PT".equals(productVO.getAttachment_type())) {
-	        	String oldFilePath = path + "/" + productVO.getAttachment_detail_new_name(); // ±âÁ¸ ÆÄÀÏ °æ·Î
+	        	String oldFilePath = path + "/" + productVO.getAttachment_detail_new_name(); // ê¸°ì¡´ íŒŒì¼ ê²½ë¡œ
 	            File oldFile = new File(oldFilePath);
 	            if (oldFile.exists()) {
-	                oldFile.delete(); // ÆÄÀÏ »èÁ¦
+	                oldFile.delete(); // íŒŒì¼ ì‚­ì œ
 	            }
 	        }
 	    	 
@@ -284,7 +284,7 @@ public class AdminController {
 	        String fileRealPath = uuid + topFile.getOriginalFilename();
 	        
 	        try {
-	            topFile.transferTo(new File(path, fileRealPath));  // ÆÄÀÏ ÀúÀå
+	            topFile.transferTo(new File(path, fileRealPath));  // íŒŒì¼ ì €ì¥
 	        } catch (IOException e) {
 	            e.printStackTrace();
             }
@@ -296,15 +296,15 @@ public class AdminController {
 	        adminService.updateProductAttachment(productVO);
 	    }
 
-	    // ±âÅ¸ ÀÌ¹ÌÁö Ã³¸®
+	    // ê¸°íƒ€ ì´ë¯¸ì§€ ì²˜ë¦¬
 	    if (multiFile != null && multiFile.length > 0) {
-	    	// ±âÁ¸ ±âÅ¸ ÀÌ¹ÌÁö »èÁ¦ (±âÁ¸ ÀÌ¹ÌÁö°¡ ÀÖÀ¸¸é »èÁ¦)
+	    	// ê¸°ì¡´ ê¸°íƒ€ ì´ë¯¸ì§€ ì‚­ì œ (ê¸°ì¡´ ì´ë¯¸ì§€ê°€ ìˆìœ¼ë©´ ì‚­ì œ)
 	        if (productVO.getOther_attachment_no() != null && !productVO.getOther_attachment_no().isEmpty()) {
 	            for (Integer attachment_no : productVO.getOther_attachment_no()) {
-	                String oldFilePath = path + "/" + attachment_no;  // ±âÁ¸ ÆÄÀÏ °æ·Î
+	                String oldFilePath = path + "/" + attachment_no;  // ê¸°ì¡´ íŒŒì¼ ê²½ë¡œ
 	                File oldFile = new File(oldFilePath);
 	                if (oldFile.exists()) {
-	                    oldFile.delete();  // ±âÁ¸ ÆÄÀÏ »èÁ¦
+	                    oldFile.delete();  // ê¸°ì¡´ íŒŒì¼ ì‚­ì œ
 	                }
 	            }
 	        }
@@ -315,7 +315,7 @@ public class AdminController {
 	        		String fileRealName = uuid.toString() + file.getOriginalFilename();
 	        		
 	        		try {
-	                    file.transferTo(new File(path, fileRealName));  // ÆÄÀÏ ÀúÀå
+	                    file.transferTo(new File(path, fileRealName));  // íŒŒì¼ ì €ì¥
 	                } catch (IOException e) {
 	                    e.printStackTrace();
 	                }
@@ -338,24 +338,24 @@ public class AdminController {
     
     }
 
-	 // »óÇ° »èÁ¦
+	 // ìƒí’ˆ ì‚­ì œ
 	 @ResponseBody
 	 @RequestMapping(value = "/deleteProduct.do", method = RequestMethod.POST)
 	 public String productDelete(@RequestBody ProductVO productVO) {
 	 
-		// ÁÖ¹® »óÅÂ¸¦ º¯°æÇÏ´Â ¼­ºñ½º È£Ãâ
+		// ì£¼ë¬¸ ìƒíƒœë¥¼ ë³€ê²½í•˜ëŠ” ì„œë¹„ìŠ¤ í˜¸ì¶œ
 		    int result = adminService.productDelete(productVO);
 		    
-		    // »óÅÂ º¯°æ ¼º°ø ¿©ºÎ¿¡ µû¶ó °á°ú ¹İÈ¯
+		    // ìƒíƒœ ë³€ê²½ ì„±ê³µ ì—¬ë¶€ì— ë”°ë¼ ê²°ê³¼ ë°˜í™˜
 		    if(result > 0) {
-		        return "success";  // ¼º°ø
+		        return "success";  // ì„±ê³µ
 		    } else {
-		        return "failure";  // ½ÇÆĞ
+		        return "failure";  // ì‹¤íŒ¨
 		    }
 	 }
 	 
 
-	// ÁÖ¹® °ü¸®
+	// ì£¼ë¬¸ ê´€ë¦¬
 	@RequestMapping(value = "/order.do", method = RequestMethod.GET)
 	public String order(Model model,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -376,48 +376,48 @@ public class AdminController {
 		return "admin/order";
 	}
 	
-	// ordered_status º¯°æ ajax
+	// ordered_status ë³€ê²½ ajax
 	@ResponseBody
 	@RequestMapping(value = "/updateStatus.do", method = RequestMethod.POST)
 	public String updateStatus(@RequestBody OrderedVO orderedVO) {
 		
-		// ÁÖ¹® »óÅÂ¸¦ º¯°æÇÏ´Â ¼­ºñ½º È£Ãâ
+		// ì£¼ë¬¸ ìƒíƒœë¥¼ ë³€ê²½í•˜ëŠ” ì„œë¹„ìŠ¤ í˜¸ì¶œ
 	    int result = adminService.updateOrderStatus(orderedVO);
 	    
-	    // »óÅÂ º¯°æ ¼º°ø ¿©ºÎ¿¡ µû¶ó °á°ú ¹İÈ¯
+	    // ìƒíƒœ ë³€ê²½ ì„±ê³µ ì—¬ë¶€ì— ë”°ë¼ ê²°ê³¼ ë°˜í™˜
 	    if(result > 0) {
-	        return "success";  // ¼º°ø
+	        return "success";  // ì„±ê³µ
 	    } else {
-	        return "failure";  // ½ÇÆĞ
+	        return "failure";  // ì‹¤íŒ¨
 	    }
 	
 	}
 	
-	// »óÇ°ÁÖ¹®¹øÈ£ ¸ğ´ŞÃ¢
+	// ìƒí’ˆì£¼ë¬¸ë²ˆí˜¸ ëª¨ë‹¬ì°½
 	@ResponseBody
 	@RequestMapping(value = "/getOrderDetails.do", method = RequestMethod.GET)
 	public Map<String, Object> getOrderDetails(Model model,
 	        @RequestParam("ordered_detail_no") String ordered_detail_no) {
-	    // ¿¹: ¼­ºñ½º¿¡¼­ ÁÖ¹® »ó¼¼ Á¤º¸ Á¶È¸
+	    // ì˜ˆ: ì„œë¹„ìŠ¤ì—ì„œ ì£¼ë¬¸ ìƒì„¸ ì •ë³´ ì¡°íšŒ
 	    Map<String, Object> orderDetail = adminService.getOrderDetails(ordered_detail_no);
 	    
-	    // ÀÀ´ä µ¥ÀÌÅÍ »ı¼º
+	    // ì‘ë‹µ ë°ì´í„° ìƒì„±
 	    Map<String, Object> response = new HashMap<>();
 	    if (orderDetail != null) {
-	        // ÁÖ¹® »ó¼¼ Á¤º¸¸¦ ÀÀ´ä ¸Ê¿¡ ³Ö±â
-	        response.put("ordered_status", orderDetail.get("ordered_status")); // ÁÖ¹® »óÅÂ
-	        response.put("ordered_name", orderDetail.get("ordered_name")); // ±¸¸ÅÀÚ¸í
-	        response.put("ordered_phone", orderDetail.get("ordered_phone")); // ¿¬¶ôÃ³
-	        response.put("ordered_address", orderDetail.get("ordered_address")); //ÁÖ¼Ò
-	        response.put("ordered_note", orderDetail.get("ordered_note")); // ¹è¼Û ¸Ş¸ğ
-	        response.put("ordered_delivery_fee", orderDetail.get("ordered_delivery_fee")); // ¹è¼Ûºñ
-	        response.put("ordered_create_at", orderDetail.get("ordered_create_at")); // ÁÖ¹®Á¢¼öÀÏ
-	        response.put("ordered_detail_quantity", orderDetail.get("ordered_detail_quantity")); // ¼ö·®
-	        response.put("product_name", orderDetail.get("product_name")); // »óÇ°¸í
-	        response.put("product_price", orderDetail.get("product_price")); // »óÇ°°¡°İ
-	        response.put("payment_date", orderDetail.get("payment_date")); // °áÁ¦ÀÏ
-	        response.put("payment_method", orderDetail.get("payment_method")); // °áÁ¦¼ö´Ü
-	        response.put("payment_price", orderDetail.get("payment_price")); // °áÁ¦±İ¾×
+	        // ì£¼ë¬¸ ìƒì„¸ ì •ë³´ë¥¼ ì‘ë‹µ ë§µì— ë„£ê¸°
+	        response.put("ordered_status", orderDetail.get("ordered_status")); // ì£¼ë¬¸ ìƒíƒœ
+	        response.put("ordered_name", orderDetail.get("ordered_name")); // êµ¬ë§¤ìëª…
+	        response.put("ordered_phone", orderDetail.get("ordered_phone")); // ì—°ë½ì²˜
+	        response.put("ordered_address", orderDetail.get("ordered_address")); //ì£¼ì†Œ
+	        response.put("ordered_note", orderDetail.get("ordered_note")); // ë°°ì†¡ ë©”ëª¨
+	        response.put("ordered_delivery_fee", orderDetail.get("ordered_delivery_fee")); // ë°°ì†¡ë¹„
+	        response.put("ordered_create_at", orderDetail.get("ordered_create_at")); // ì£¼ë¬¸ì ‘ìˆ˜ì¼
+	        response.put("ordered_detail_quantity", orderDetail.get("ordered_detail_quantity")); // ìˆ˜ëŸ‰
+	        response.put("product_name", orderDetail.get("product_name")); // ìƒí’ˆëª…
+	        response.put("product_price", orderDetail.get("product_price")); // ìƒí’ˆê°€ê²©
+	        response.put("payment_date", orderDetail.get("payment_date")); // ê²°ì œì¼
+	        response.put("payment_method", orderDetail.get("payment_method")); // ê²°ì œìˆ˜ë‹¨
+	        response.put("payment_price", orderDetail.get("payment_price")); // ê²°ì œê¸ˆì•¡
 	    } else {
 	        response.put("error", "Order details not found");
 	    }
@@ -426,7 +426,7 @@ public class AdminController {
 	}
 
 
-	// Ãë¼Ò °ü¸®
+	// ì·¨ì†Œ ê´€ë¦¬
 	@RequestMapping(value = "/cancel.do", method = RequestMethod.GET)
 	public String cancel(Model model,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -448,24 +448,24 @@ public class AdminController {
 		return "admin/cancel";
 	}
 	
-	// payment_type »óÅÂ º¯°æ ajax
+	// payment_type ìƒíƒœ ë³€ê²½ ajax
 	@ResponseBody
 	@RequestMapping(value = "/updateRefundStatus.do", method = RequestMethod.POST)
 	public String changeRefundStatus(@RequestBody PaymentVO paymentVO) {
 		
-		// ÁÖ¹® »óÅÂ¸¦ º¯°æÇÏ´Â ¼­ºñ½º È£Ãâ
+		// ì£¼ë¬¸ ìƒíƒœë¥¼ ë³€ê²½í•˜ëŠ” ì„œë¹„ìŠ¤ í˜¸ì¶œ
 	    int result = adminService.updateRefundStatus(paymentVO);
 	    
-	    // »óÅÂ º¯°æ ¼º°ø ¿©ºÎ¿¡ µû¶ó °á°ú ¹İÈ¯
+	    // ìƒíƒœ ë³€ê²½ ì„±ê³µ ì—¬ë¶€ì— ë”°ë¼ ê²°ê³¼ ë°˜í™˜
 	    if(result > 0) {
-	        return "success";  // ¼º°ø
+	        return "success";  // ì„±ê³µ
 	    } else {
-	        return "failure";  // ½ÇÆĞ
+	        return "failure";  // ì‹¤íŒ¨
 	    }
 	
 	}
 
-	// ¸ÅÃâ °ü¸®
+	// ë§¤ì¶œ ê´€ë¦¬
 	@RequestMapping(value = "/sales.do", method = RequestMethod.GET)
 	public String sales(Model model,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -481,14 +481,14 @@ public class AdminController {
 		List<Map<String, Object>> salesList = adminService.salesList(pagingParam);
 		
 		
-		// ÃÑ °Å·¡±İ¾×
+		// ì´ ê±°ë˜ê¸ˆì•¡
         OrderedDetailVO orderTotalAmount = adminService.orderTotalAmount();
-        // ÃÑ °áÁ¦±İ¾×
+        // ì´ ê²°ì œê¸ˆì•¡
         PaymentVO paymentTotalAmount = adminService.paymentTotalAmount();
-        // ÃÑ ÆÇ¸Å¼ö·®
+        // ì´ íŒë§¤ìˆ˜ëŸ‰
         OrderedDetailVO orderTotalQuantity = adminService.orderTotalQuantity();
 
-        // °è»êµÈ °ªÀ» ¸ğµ¨¿¡ ´ã¾Æ¼­ ºä¿¡ Àü´Ş
+        // ê³„ì‚°ëœ ê°’ì„ ëª¨ë¸ì— ë‹´ì•„ì„œ ë·°ì— ì „ë‹¬
         model.addAttribute("orderTotalAmount", orderTotalAmount);
         model.addAttribute("paymentTotalAmount", paymentTotalAmount);
         model.addAttribute("orderTotalQuantity", orderTotalQuantity);
@@ -500,7 +500,7 @@ public class AdminController {
 		return "admin/sales";
 	}
 
-	// ¸®ºä °ü¸®
+	// ë¦¬ë·° ê´€ë¦¬
 	@RequestMapping(value = "/review.do", method = RequestMethod.GET)
 	public String review(Model model,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -521,24 +521,24 @@ public class AdminController {
 		return "admin/review";
 	}
 
-	// review_status »óÅÂ º¯°æ ajax
+	// review_status ìƒíƒœ ë³€ê²½ ajax
 	@ResponseBody
 	@RequestMapping(value = "/reviewStatus.do", method = RequestMethod.POST)
 	public String reviewStatus(@RequestBody ReviewVO reviewVO) {
 		
-		// ÁÖ¹® »óÅÂ¸¦ º¯°æÇÏ´Â ¼­ºñ½º È£Ãâ
+		// ì£¼ë¬¸ ìƒíƒœë¥¼ ë³€ê²½í•˜ëŠ” ì„œë¹„ìŠ¤ í˜¸ì¶œ
 		int result = adminService.reviewStatus(reviewVO);
 		
-		// »óÅÂ º¯°æ ¼º°ø ¿©ºÎ¿¡ µû¶ó °á°ú ¹İÈ¯
+		// ìƒíƒœ ë³€ê²½ ì„±ê³µ ì—¬ë¶€ì— ë”°ë¼ ê²°ê³¼ ë°˜í™˜
 		if(result > 0) {
-			return "success";  // ¼º°ø
+			return "success";  // ì„±ê³µ
 		} else {
-			return "failure";  // ½ÇÆĞ
+			return "failure";  // ì‹¤íŒ¨
 		}
 		
 	}
 
-	// ¹®ÀÇ °ü¸®
+	// ë¬¸ì˜ ê´€ë¦¬
 	@RequestMapping(value = "/contact.do", method = RequestMethod.GET)
 	public String contact(Model model, OrderedDetailVO orderedDetailVO, PaymentVO paymentVO,
 			@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage) {
@@ -555,12 +555,12 @@ public class AdminController {
 		pagingParam.put("start", paging.getStart());
 		pagingParam.put("perPage", paging.getPerPage());
 
-		// ºñÁö´Ï½º ·ÎÁ÷ : DB¿¡ ÀÖ´Â ÀüÃ¼ È¸¿ø ¸ñ·Ï µ¥ÀÌÅÍ°¡Á®¿À±â
+		// ë¹„ì§€ë‹ˆìŠ¤ ë¡œì§ : DBì— ìˆëŠ” ì „ì²´ íšŒì› ëª©ë¡ ë°ì´í„°ê°€ì ¸ì˜¤ê¸°
 		List<Map<String, Object>> contactList = adminService.contactList(pagingParam);
 		
 		
 		
-		// ¸ğµ¨ °´Ã¼ »ç¿ëÇÏ¿© Á¶È¸ µ¥ÀÌÅÍ È­¸éÀ¸·Î Æ÷¿öµù
+		// ëª¨ë¸ ê°ì²´ ì‚¬ìš©í•˜ì—¬ ì¡°íšŒ ë°ì´í„° í™”ë©´ìœ¼ë¡œ í¬ì›Œë”©
 		model.addAttribute("contactList", contactList);
 		model.addAttribute("paging", paging);
 		model.addAttribute("orderTotalAmount", orderTotalAmount);
@@ -570,27 +570,27 @@ public class AdminController {
 		return "admin/contact";
 	}
 	
-	// ¹®ÀÇ ´äº¯ ÀúÀå (AJAX ¿äÃ» Ã³¸®)
+	// ë¬¸ì˜ ë‹µë³€ ì €ì¥ (AJAX ìš”ì²­ ì²˜ë¦¬)
     @ResponseBody
     @RequestMapping(value = "/saveReply.do", method = RequestMethod.POST)
     public Map<String, Object> saveContactReply(@RequestBody ContactVO contactVO) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            // ¹®ÀÇ ´äº¯ ÀúÀå
+            // ë¬¸ì˜ ë‹µë³€ ì €ì¥
             int result = adminService.saveContactReply(contactVO);
 
             if (result > 0) {
                 response.put("status", "success");
-                response.put("message", "´äº¯ÀÌ ¼º°øÀûÀ¸·Î ÀúÀåµÇ¾ú½À´Ï´Ù.");
+                response.put("message", "ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.");
             } else {
                 response.put("status", "fail");
-                response.put("message", "´äº¯ ÀúÀå¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+                response.put("message", "ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
             }
         } catch (Exception e) {
             e.printStackTrace();
             response.put("status", "error");
-            response.put("message", "¼­¹ö ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+            response.put("message", "ì„œë²„ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
         }
 
         return response;
