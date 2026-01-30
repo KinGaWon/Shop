@@ -526,7 +526,7 @@ public class AdminController {
 	@RequestMapping(value = "/reviewStatus.do", method = RequestMethod.POST)
 	public String reviewStatus(@RequestBody ReviewVO reviewVO) {
 		
-		// 리뷰 상태를 변경하는 서비스 호출
+		// 리뷰 공개 상태를 변경하는 서비스 호출
 		int result = adminService.reviewStatus(reviewVO);
 		
 		// 상태 변경 성공 여부에 따라 결과 반환
